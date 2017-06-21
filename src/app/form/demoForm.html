@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+  <form [formGroup]="heroForm" novalidate>
+    <input type="text"  formControlName="name" required>
+    <input type="text"  formControlName="age" required>
+  </form>
+
+
+  ||{{userInfoService.userInfo|json}}||
+
+  {{heroForm.get("name").value|json}}
+
+  <form [formGroup]="heroFormBuilder" novalidate>
+    <input type="text" formControlName="name">
+    <div formArrayName="addresses">
+      <div *ngFor="let address of addresses.controls; let i=index" [formGroupName]="i" >
+        <input type="checkbox" formControlName="province">
+        <input type="checkbox" formControlName="city">
+        <input type="checkbox" formControlName="community">
+      </div>
+    </div>
+    <!--<div formGroupName="address">
+      <input type="text" formControlName="province">
+      <input type="text" formControlName="city">
+      <input type="text" formControlName="community">
+    </div>-->
+  </form>
+  <!--{{addresses.value|json}}
+  {{addresses.status|json}}-->
+{{heroFormBuilder.value | json}}
+{{heroFormBuilder.status | json}}
+  <input type="button" (click)="resetForm()" value="重置表单啊qq">
+  <input type="button" (click)="addAddress()" value="添加地址">
+<div style="background: #ff0000;color: #faa;font-size: 12px;">
+</div>
+
+
+  <form novalidate [formGroup]="validateForm">
+    <input type="text" formControlName="name">
+  </form>
+{{validateForm.value|json}}
+{{validateForm.status|json}}
+
+</body>
+</html>

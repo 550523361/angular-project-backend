@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>动态表单创建啊</title>
+</head>
+<body>
+
+<form novalidate [formGroup]="formGroup" (ngSubmit)="submit(formGroup.value)">
+  <div *ngFor="let element of formModel.elements;let i = index;" [ngSwitch]="element.type" class="formRow">
+            <span  *ngSwitchCase="'input'">
+                <div *ngIf="!element.hidden">
+                  <label class="formLeftLabel" for="input_{{element.prop}}_{{i}}"><span *ngIf="element.required" class="required">*</span>{{element.label}}:</label>
+                  <input type="text" id="input_{{element.prop}}_{{i}}" name="{{element.prop}}" formControlName="{{element.prop}}">
+                  <span class="ng-invalid-msg"  *ngFor="let key of formGroup.get(element.prop).errors|keys ">{{formGroup.get(element.prop).errors[key]}}</span>
+                </div>
+            </span>
+            <span  *ngSwitchCase="'upload'">
+                <div *ngIf="!element.hidden" class="uploadContainer">
+                  <label class="formLeftLabel"><span *ngIf="element.required" class="required">*</span>{{element.label}}:</label>
+                  <label for="upload_{{element.prop}}_{{i}}">
+                    <span class="uploadImageContainer" [ngClass]="element.uploadClass">
+                      <img *ngIf="formGroup.get(element.prop).value" src="{{formGroup.get(element.prop).value.showUrl}}">
+                      <img *ngIf="!formGroup.get(element.prop).value" src="http://ejiaziimgtest.goodaa.com.cn/pic_5b2e79e9-6e7c-4bfb-8330-01a9313bbcbd.jpg">
+                    </span>
+                  </label>
+                  <input type="file" [multiple]="element.multiple" fileUpload="element" [accept]="element.imageConfig.extend" [uploadConfig]="{formControl:formGroup.get(element.prop),config:element.imageConfig}" id="upload_{{element.prop}}_{{i}}" >
+                  <input type="hidden" [multiple]="element.multiple" fileUpload="element" id="upload_{{element.prop}}_{{i}}_hidden" name="{{element.prop}}" formControlName="{{element.prop}}">
+                  <span class="ng-invalid-msg"  *ngFor="let key of formGroup.get(element.prop).errors|keys ">{{formGroup.get(element.prop).errors[key]}}</span>
+                </div>
+            </span>
+            <span  *ngSwitchCase="'radio'">
+                <span *ngIf="!element.hidden">
+                      <label class="formLeftLabel"><span *ngIf="element.required" class="required">*</span>{{element.label}}:</label>
+                      <span *ngFor="let option of element.options;let i=index;">
+                          <input type="radio"  id="radio_{{element.prop}}_{{i}}"  name="{{element.prop}}" [checked]="option.value==element.defaultValue" value="{{option.value}}" formControlName="{{element.prop}}">
+                          <label for="radio_{{element.prop}}_{{i}}">{{option.label}}</label>
+                      </span>
+                      <span class="ng-invalid-msg"  *ngFor="let key of formGroup.get(element.prop).errors|keys ">{{formGroup.get(element.prop).errors[key]}}</span>
+                </span>
+            </span>
+            <span  *ngSwitchCase="'checkbox'">
+                <span *ngIf="!element.hidden">
+                    <label  class="formLeftLabel"><span *ngIf="element.required" class="required">*</span>{{element.label}}:</label>
+                    <span formArrayName="{{element.prop}}">
+                        <span *ngFor="let option of formGroup.get(element.prop).controls;let i=index;" [formGroupName]="i">
+                              <input type="checkbox"  id="{{element.type}}_{{element.prop}}_{{i}}" name="value" formControlName="checked">
+                              <label for="{{element.type}}_{{element.prop}}_{{i}}">{{option.value.label}}</label>
+                        </span>
+                    </span>
+                    <span class="ng-invalid-msg" *ngFor="let key of formGroup.get(element.prop).errors|keys ">{{formGroup.get(element.prop).errors[key]}}</span>
+                </span>
+            </span>
+            <span  *ngSwitchCase="'array'">
+                <span *ngIf="!element.hidden">
+                    <label  class="formLeftLabel"><span *ngIf="element.required" class="required">*</span>{{element.label}}:</label>
+                    <span formArrayName="{{element.prop}}">
+                        <span *ngFor="let option of formGroup.get(element.prop).controls;let i=index;" [formGroupName]="i">
+                              <input type="checkbox"  id="array_{{element.type}}_{{element.prop}}_{{i}}" name="value" formControlName="checked">
+                              <label for="array_{{element.type}}_{{element.prop}}_{{i}}">{{option.value.label}}</label>
+                        </span>
+                    </span>
+                    <span class="ng-invalid-msg" *ngFor="let key of formGroup.get(element.prop).errors|keys ">{{formGroup.get(element.prop).errors[key]}}</span>
+                </span>
+            </span>
+
+  </div>
+  <input type="submit" value="提交" [disabled]="formGroup.status=='INVALID'" >
+</form>
+<hr>
+{{formGroup.value|json}}
+<hr color="#a00">
+{{formGroup.status|json}}
+<hr>
+</body>
+</html>

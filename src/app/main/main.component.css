@@ -1,0 +1,22 @@
+.firstLeaveMenu{
+    padding-left: 10px;
+}
+
+.firstLeaveMenu+div >div{
+    padding-left: 25px;
+    cursor: pointer;
+    color: #7598ff;
+    margin: 10px 0px;
+    font-size: 14px;
+}
+
+.leftIcon{
+    display: inline-block;
+    float: left;
+}
+.rightContainer{
+    overflow-y: auto;
+    padding: 5px 0px;
+    flex-grow: 1;
+    flex-shrink: 1;
+}

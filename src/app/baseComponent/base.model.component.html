@@ -1,0 +1,11 @@
+<div [ngClass]="modelStatus">
+  <div style="display: flex;flex-direction: row;justify-content: center;align-items: center;height: 100%;width: 100%;overflow-y: auto;">
+    <div class="innerContainer" style="background: #ffffff;width: 80%;border-radius: 3px;padding: 0px;max-height: 70%;overflow-y: auto;height: 500px;">
+      <div class="innerContainer" style="display: flex;flex-direction: column;justify-content: space-between;height: 100%;max-height: 100%;">
+        <div class="herder" style="flex-shrink:0;flex-grow: 0;height: 80px;">headeraaa</div>
+        <div class="body" style="flex-shrink: 1;flex-grow: 1;overflow-y: auto;">asdfasdf</div>
+        <div class="footer"  style="flex-shrink: 0;flex-grow: 0;height: 80px;" (click)="close()">关闭</div>
+      </div>
+    </div>
+  </div>
+</div>

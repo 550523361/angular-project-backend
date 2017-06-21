@@ -1,0 +1,37 @@
+  <base-table-list-query [queryElements]="tableListConfig.query" [pageData]="tableData.data.dataList" (outClick)="queryClick($event)"></base-table-list-query>
+  <table>
+    <thead>
+      <th>序列</th>
+      <th *ngFor="let column of tableListConfig.colums&&tableListConfig.colums.length>0?tableListConfig.colums:tableListConfig.defaultColums">
+        <span *ngIf="column.type=='checkbox'">
+          <input   *ngIf="column.type=='checkbox'"   (change)="batchChoose($event,this)"  type="checkbox"/>
+        </span>
+        <span *ngIf="column.type!='checkbox'">
+          {{column.label}}
+        </span>
+      </th>
+      <th *ngIf="tableListConfig.operator&&tableListConfig.operator.length>0" width="{{tableListConfig.operator.length*70}}" style="min-width: 180px;">操作</th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let rowData of tableData.data.dataList;let i = index">
+        <td>{{i+1}}</td>
+        <td *ngFor="let column of tableListConfig.colums&&tableListConfig.colums.length>0?tableListConfig.colums:tableListConfig.defaultColums">
+                    <span    *ngIf="column.type==null||column.type==''"            (click)="column['click']&&column['click'](rowData)">{{rowData[column.prop]}}</span>
+                   <input   *ngIf="column.type=='checkbox'"     (click)="column['click']&&column['click']($event,rowData)"   (change)="column['change']&&column['change']($event,rowData)" [(ngModel)]="rowData.checked"  type="checkbox"/>
+                   <a        *ngIf="column.type=='href'"           href="{{rowData[column.prop]}}" target="_blank" style="cursor: pointer;color: blue;" title="点击看看">{{rowData[column.prop]}}</a>
+                  <input   *ngIf="column.type=='sortOrder'"     type="number"  [(ngModel)]="rowData[column.prop]" (change)="column['change']&&column['change']($event,rowData)"  style="max-width: 40px;" alt=""/>
+                  <label   *ngIf="column.type=='diy'"            (click)="column['click']&&column['click']($event,rowData)">{{column.diy&&column.diy(rowData)}}</label>
+                  <input   *ngIf="column.type=='setOrder'"      type="text"  ng-model="item.orderNo"  (blur)="column['blur']&&column['blur']($event,rowData)" maxlength="6" style="max-width: 80px;" alt=""/>
+                  <span    *ngIf="column.type=='image'" >
+                      <img           *ngFor="let img of (rowData[column.prop]+''||'').split(',')" src="{{img}}" style="max-width: 80px;margin-right:10px" alt=""/>
+                  </span>
+        </td>
+        <td *ngIf="tableListConfig.operator&&tableListConfig.operator.length>0">
+           <span class="operateBtn" *ngFor="let operate of tableListConfig.operator" (click)="operate['click']&&operate['click'](rowData)">
+              {{operate.label}}{{operate.map&&operate.map[rowData[operate.prop]]}}
+           </span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <base-table-list-pager [pageData]="tableData.data.dataPages" (pageClick)="pageClick($event)"></base-table-list-pager>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>英雄信息</title>
+  <style>
+    input[type=text],input[type=text]:focus{
+      border: none;
+      border-bottom: 1px solid #aaa;
+      outline: none;
+      position: relative;
+    }
+
+
+    .require{
+      color: #f00;
+      font-size: 12px;
+    }
+    .ng-invalid input{
+      border-left: 12px solid #f00;
+      color: #ff0000;
+    }
+    .ng-valid input:before{
+      content:" √ "!important;
+      top: -0px!important;;
+      font-size: 14px!important;;
+      margin-left:10px!important;;
+      color: #ff0000!important;;
+    }
+    .afterTest:after{
+      content:" √ ";
+      top: -0px;
+      font-size: 14px;
+      margin-left:10px;
+      color: #ff0000;
+    }
+    .ng-valid input{
+      border-left: 0px solid #0f0;
+      border-right: 4px solid #0f0;
+    }
+  </style>
+</head>
+<body>
+  <div *ngIf="true" >
+    <div *ngFor = " let hero of heros ">
+      名称: <span (click)="clickUtils.save(hero,$event)">{{hero.name}}</span>
+      id:{{hero.id}}
+      年龄: <span (click)="test(hero)">{{hero.age}}</span>
+    </div>
+  </div>
+  <div myHighLight [myEnterColor]="color" [myLeaveColor]="'#0a0'">
+    asdfasdf
+  </div>
+  <input type="text" myHighLight>
+  <form action="">
+    <input type="text" #name="ngModel"  name="name" [(ngModel)]="hero.name" (keyup) = "keyUtils.keyUp(name.value,name)" required>
+    <div [hidden]="name.valid || name.pristine" class="require">
+      名称不能不为空啊!
+    </div>
+    <div *ngIf="name.error&&name.error.msg"  class="require">
+      {{name.error&&name.error.msg}}
+    </div>
+
+  </form>
+</body>
+</html>

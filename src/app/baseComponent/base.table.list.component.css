@@ -1,0 +1,39 @@
+table{
+  border-collapse: collapse;
+  color: #333;
+}
+
+tbody tr{
+  border-top: 1px solid #eee;
+}
+th{
+  background: #eee;
+  font-weight: 500;
+  border: 0px solid #000!important;
+  padding: 3px 0px;
+  font-size: 15px;
+  color: #888;
+}
+td{
+  font-size: 12px;
+}
+
+.operateBtn{
+  display: inline-block;
+  border: 1px solid #a2caff;
+  border-radius: 3px;
+  margin-right: 10px;
+  padding: 3px 7px;
+  font-size: 12px;
+  color: rgba(1, 0, 255, 0.93);
+  cursor: pointer;
+}
+table{
+  width: 100%;
+  text-align: center;
+}
+td{
+  vertical-align: middle;
+  text-align: center;
+  padding: 5px 10px;
+}

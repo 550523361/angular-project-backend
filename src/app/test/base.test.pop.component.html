@@ -1,0 +1,7 @@
+    <label  (click)="popTest()">
+      <span *ngIf="advert">{{advert.name}}  修改</span>
+      <span *ngIf="!advert">请选择广告</span>
+    </label>
+    <div id="testPop">
+        <base-pop-component [simpleConfig]="tableListSimpleConfig" [tableListConfig]="tableListConfig" ></base-pop-component>
+    </div>

@@ -1,0 +1,14 @@
+<div class="loginContainer">
+    <div class="topContainer">
+        <img src="http://ejiaziimgtest.goodaa.com.cn/pic_b1860b4e-ef8b-4347-944e-892c1f524940.png" alt="">
+         e家子运营管理平台
+    </div>
+    <form class="loginForm">
+        <div class="userName"><input type="text" [(ngModel)]="email" name="emain" placeholder="用户名"></div>
+        <div class="password"><input type="password" [(ngModel)]="passwd" name="passwd" placeholder="密码"></div>
+        <div class="loginBtnContainer">
+            <input (click)="login()" type="button" value="登陆">
+        </div>
+    </form>
+    <div class="footContainer">copyright by goodaa.com.cn</div>
+</div>

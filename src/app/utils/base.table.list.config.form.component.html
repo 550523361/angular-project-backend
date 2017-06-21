@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div>
+  接口地址：
+  <input type="text" [(ngModel)]="baseTableListConfig.url" style="min-width: 80%;">
+  <div></div>
+  接口方法：
+  <input type="text" [(ngModel)]="baseTableListConfig.httpMethod" style="min-width: 80%;">
+  <div></div>
+  列名设置：
+  <base-table-list-query [queryElements]="baseTableListConfig.query" [reInit]="reload" (outClick)="queryClick($event)"></base-table-list-query>
+  <table>
+    <thead>
+      <th *ngFor="let input of baseTableListConfig.colums">
+          <div>{{input.label}}</div>
+          <div>{{input.prop}}</div>
+          <div>{{input.type}}</div>
+      </th>
+      <th style="width: 300px;">操作</th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let i of [1,2,3,4]">
+        <td *ngFor="let input of baseTableListConfig.colums">
+          {{defaultValue}}
+        </td>
+        <td align="center">
+          <span class="operateBtn" *ngFor="let operate of baseTableListConfig.operator">
+            {{operate.label}}
+          </span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="addTypeContainer">
+  <span *ngFor="let item of addTypes">
+    <label for="{{item.value}}">{{item.label}}</label>
+    <input type="radio" [(ngModel)]="currentType" value="{{item.value}}" id="{{item.value}}">
+  </span>
+</div>
+  <div *ngIf="currentType==0" class="flexContainer">
+    <form novalidate [formGroup]="columnFrom">
+      <div *ngFor="let input of columnFormData.inputs">
+        <label for="{{input.key}}" class="inputLabel">{{input.label}}</label>
+        <input type="text" id="{{input.key}}" formControlName="{{input.name}}">
+      </div>
+    </form>
+    <span  (click)="addColumnItem()">
+    添加操作
+  </span>
+    <div class="placeholder"></div>
+  </div>
+  <div *ngIf="currentType==1" class="flexContainer">
+    <form novalidate [formGroup]="operateFrom">
+      <div *ngFor="let input of operatorFormData.inputs">
+        <label for="{{input.key}}" class="inputLabel">{{input.label}}</label>
+        <input type="text" id="{{input.key}}" formControlName="{{input.name}}">
+      </div>
+    </form>
+    <span  (click)="addOperateItem()">
+    添加操作
+  </span>
+    <div class="placeholder"></div>
+  </div>
+  <div *ngIf="currentType==2" class="flexContainer">
+    <form novalidate [formGroup]="queryComplexFrom">
+      <div *ngFor="let input of queryComplexFormData.inputs">
+        <label for="{{input.key}}" class="inputLabel">{{input.label}}</label>
+        <input type="text" id="{{input.key}}" formControlName="{{input.name}}">
+      </div>
+    </form>
+    <span  (click)="addQueryComplexItem()">
+    添加操作
+  </span>
+    <div class="placeholder"></div>
+  </div>
+  <div *ngIf="currentType==3" class="flexContainer">
+    <form novalidate [formGroup]="querySimpleInputFrom">
+      <div *ngFor="let input of querySimpleInputFormData.inputs">
+        <label for="{{input.key}}" class="inputLabel">{{input.label}}</label>
+        <input type="text" id="{{input.key}}" formControlName="{{input.name}}">
+      </div>
+    </form>
+    <span  (click)="addQuerySimpleInputItem()">
+    添加操作
+  </span>
+    <div class="placeholder"></div>
+  </div>
+
+<span (click)="addCasecadeQuery()" class="operateBtn">添加省市区级联</span>
+<span (click)="exportConfig()" class="operateBtn">导出配置</span>
+<span (click)="previewConfig()" class="operateBtn">预览接口</span>
+
+<div *ngIf="previewTableListConfig&&isView" class="previewContainer">
+  <base-table-list  [tableListConfig]="previewTableListConfig"></base-table-list>
+</div>
+</body>
+</html>
